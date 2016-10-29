@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-Copyright (C) 2016 Yamil ElÃ­as <yamileliassoto@gmail.com>
+Copyright (C) 2016 Yamil Elías <yamileliassoto@gmail.com>
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -17,6 +17,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -->
 
+<%-- Import needed page to use Web Service --%>
+<%@page import="edu.client.WebserviceConsumer" %>
+
 <!-- Call Angular hangman App -->
 <html ng-app="hangman">
 <head>
@@ -30,16 +33,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
     <!-- JS Scripts -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+    
+    <!-- AngularJS File -->
     <script src="assets/ng/hangman.js"></script>
 
+    <%
+        // Get random word from the web service
+        WebserviceConsumer wsc = new WebserviceConsumer();
+        String randomWord = wsc.getWord("http://cml.chi.itesm.mx:8080/HangmanWebService/getRandomWord.jsp");
+    %>
+    
     <title>Hangman Web Service</title>
 </head>
   
-<body>
+<body ng-init="randomWord = '<% out.print(randomWord); %>';">
     <!-- Use the hangman controller from hangman app -->
     <div class="container-fluid" ng-controller="hangmanController">
         <div class="well">
-            <h1>Hangman</h1>
+            <h1><strong>Hangman</strong></h1>
             <h2>The Web Service Game</h2>
 
             <!-- Canvas for hangman drawing -->
@@ -67,14 +78,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 </div>
 
                 <p>
-                    <span ng-hide="win || lost">You have {{ missesAllowed - numMisses }} guesses remaining.</span>
+                    <i><span ng-hide="win || lost">You have {{ missesAllowed - numMisses }} guesses remaining.</span></i>
                     <span ng-show="win">Well done!</span>
                     <span ng-show="lost">Sorry, please try again!</span>
                 </p>
             </div>
 
             <!-- Button to reset the game -->
-            <button ng-click="reset();" class="btn btn-primary btn-large">New Game</button>  
+            <button ng-click="reset();" class="btn btn-primary btn-large" onclick="location.reload();">New Game</button>
+            <hr />
+            <p><i>Developed by <a href="https://yamilelias.github.io">Yamil Elías</a></i></p>
         </div>
     </div>
 

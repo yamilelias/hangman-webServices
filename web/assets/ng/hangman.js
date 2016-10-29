@@ -19,14 +19,17 @@
 // Angular module that controls all the hangman functionality
 angular.module('hangman', [])
     .controller('hangmanController', ['$scope', function($scope){
+        
+        // Init drawing
         initCanvas();
+        
         $scope.missesAllowed = 6;
 
-        // Deprecated function when web service enters
-        $scope.getRandomWord = function() {
+        // Deprecated function that gets a random word from an array of words
+        /*$scope.getRandomWord = function() {
             var index = Math.floor(Math.random() * words.length);
             return words[index];
-        };
+        };*/
         
         $scope.initCanvas = function() {
             initCanvas();
@@ -74,14 +77,18 @@ angular.module('hangman', [])
             _.each($scope.letters, function(letter) {
                 letter.chosen = false;
             });
-            $scope.hiddenWord = $scope.makeLetters($scope.getRandomWord());
+            // Deprecated way to get Random Word, getting it from an Array
+            //$scope.hiddenWord = $scope.makeLetters($scope.getRandomWord());
+            
+            // Get the hidden word from the random word provided by the web service
+            $scope.hiddenWord = $scope.makeLetters($scope.randomWord);
             $scope.numMisses = 0;
             $scope.win = false;
             $scope.lost = false;
             clearCanvas();
             $scope.initCanvas();
         };
-        $scope.reset();
+        $scope.reset(); // Reset everytime the controller is loaded
   
         // Try the selected letter that the user clicks
         $scope.try = function(guess) {
@@ -108,11 +115,8 @@ angular.module('hangman', [])
     }])
 ;
 
-// Deprecated variable when web service enters.
-var words = [
-  'Rails', 'AngularJS', 'Bootstrap', 'Ruby', 'JavaScript',
-  'authentication', 'function', 'array', 'object', 'sublime',
-  'github', 'agile', 'route', 'database', 'model', 'view',
-   'controller', 'terminal', 'array', 'data', 'inheritance',
-  'Heroku', 'scope',  'closure'
-];
+// Deprecated array of words used to provide a random word for the game
+/*var words = [
+  'AngularJS', 'Bootstrap', 'JavaScript', 'function', 'object',
+  'github', 'controller', 'array', 'data', 'scope',  'java'
+];*/
