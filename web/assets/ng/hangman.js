@@ -19,7 +19,7 @@
 // Angular module that controls all the hangman functionality
 angular.module('hangman', [])
     .controller('hangmanController', ['$scope', function($scope){
-
+        initCanvas();
         $scope.missesAllowed = 6;
 
         // Deprecated function when web service enters
@@ -27,6 +27,10 @@ angular.module('hangman', [])
             var index = Math.floor(Math.random() * words.length);
             return words[index];
         };
+        
+        $scope.initCanvas = function() {
+            initCanvas();
+        }
 
         // Make the mapping for the letters
         $scope.makeLetters = function(word) {
@@ -38,9 +42,15 @@ angular.module('hangman', [])
         // Alphabet
         $scope.letters = $scope.makeLetters("abcdefghijklmnopqrstuvwxyz");
 
-        // Reveal the word if the user lose
-        $scope.revealWord = function() {
+        // Game Over function
+        $scope.gameOver = function() {
+            // Reveal the word if the user lose
             _.each($scope.hiddenWord, function(letter) {
+                letter.chosen = true;
+            });
+            
+            // Block remaining letters if user lose
+            _.each($scope.letters, function(letter) {
                 letter.chosen = true;
             });
         };
@@ -53,8 +63,9 @@ angular.module('hangman', [])
             }, true);
             
             if (!$scope.win && $scope.numMisses === $scope.missesAllowed) {
+                updateCanvas($scope.numMisses,1);
                 $scope.lost = true;
-                $scope.revealWord();
+                $scope.gameOver();
             }
         };
 
@@ -67,6 +78,8 @@ angular.module('hangman', [])
             $scope.numMisses = 0;
             $scope.win = false;
             $scope.lost = false;
+            clearCanvas();
+            $scope.initCanvas();
         };
         $scope.reset();
   
@@ -86,6 +99,7 @@ angular.module('hangman', [])
             // If letter wasn't found in the hidden word
             if (!found) {
                 $scope.numMisses++;
+                updateCanvas($scope.missesAllowed - $scope.numMisses,0);
             }
 
             // Does it end with this try?

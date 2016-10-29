@@ -28,8 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         
         <!-- JS Scripts -->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
         <script src="assets/ng/hangman.js"></script>
@@ -42,6 +40,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
     
     <!-- Use the hangman controller from hangman app -->
     <div class="container-fluid" ng-controller="hangmanController">
+        <!-- Canvas for hangman drawing -->
+        <canvas id="hangmanCanvas" width="600" height="300"></canvas>
+        <script src="assets/js/canvas.js"></script>
       <div class="well">
         <div class="secretWord">
           <ul class="list-inline">
@@ -76,6 +77,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
       <button ng-click="reset();" class="btn btn-primary btn-large">New Game</button>        
     </div>
       
-    
+    <!-- Other Scripts -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
   </body>
 </html>
