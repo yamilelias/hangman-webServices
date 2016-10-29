@@ -1,35 +1,85 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+Copyright (C) 2016 Yamil Elías <yamileliassoto@gmail.com>
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -->
-<html>
+
+<!-- Call Angular hangman App -->
+<html ng-app="hangman">
     <head>
-        <title>Angular QuickStart JS</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="assets/css/style.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <!-- Load libraries -->
-        <!-- IE required polyfill -->
-        <script src="node_modules/core-js/client/shim.min.js"></script>
-
-        <script src="node_modules/zone.js/dist/zone.js"></script>
-        <script src="node_modules/reflect-metadata/Reflect.js"></script>
-
-        <script src="node_modules/rxjs/bundles/Rx.js"></script>
-        <script src="node_modules/@angular/core/bundles/core.umd.js"></script>
-        <script src="node_modules/@angular/common/bundles/common.umd.js"></script>
-        <script src="node_modules/@angular/compiler/bundles/compiler.umd.js"></script>
-        <script src="node_modules/@angular/platform-browser/bundles/platform-browser.umd.js"></script>
-        <script src="node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js"></script>
+        <!-- CSS Styles -->
+        <link rel="stylesheet" href="assets/css/style.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         
-        <!-- Load our modules -->
-        <script src='app/app.component.js'></script>
-        <script src='app/app.module.js'></script>
-        <script src='app/main.js'></script>
-    </head>
-    <body>
-        <my-app></my-app>
-    </body>
+        <!-- JS Scripts -->
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+        <script src="assets/ng/hangman.js"></script>
+        
+        <title>Hangman Web Service</title>
+  </head>
+  
+  <body>
+    
+    
+    <!-- Use the hangman controller from hangman app -->
+    <div class="container-fluid" ng-controller="hangmanController">
+      <div class="well">
+          <h1>Hangman!</h1>
+          <!-- Canvas for hangman drawing -->
+        <canvas id="hangmanCanvas" width="600" height="300"></canvas>
+        <script src="assets/js/canvas.js"></script>
+        <div class="secretWord">
+          <ul class="list-inline">
+            <!-- Print hidden words -->  
+            <li ng-repeat="letter in hiddenWord">
+              <span ng-hide="letter.chosen">_</span>
+              <span ng-show="letter.chosen">{{ letter.name }}</span>
+            </li>
+          </ul>
+          
+          <!-- Print available letters --> 
+          <div class="letters">
+            <ul class="list-inline">
+              <li ng-repeat="letter in letters">
+                <!-- Use angular to inspect if the letter have been chosen already -->
+                <button class="btn btn-primary letter-button"
+                        ng-disabled="letter.chosen"
+                        ng-click="try(letter);">{{letter.name}}</button>
+              </li>
+            </ul>
+          </div>
+          
+          <p>
+            <span ng-hide="win || lost">You have {{ missesAllowed - numMisses }} guesses remaining.</span>
+            <span ng-show="win">Well done!</span>
+            <span ng-show="lost">Sorry, please try again!</span>
+          </p>
+        </div>
+        
+        <!-- Button to reset the game -->
+        <button ng-click="reset();" class="btn btn-primary btn-large">New Game</button>  
+      </div>
+    </div>
+      
+    <!-- Other Scripts -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  </body>
 </html>
