@@ -16,7 +16,9 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -->
-<html ng-app>
+
+<!-- Call Angular hangman App -->
+<html ng-app="hangman">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,31 +28,35 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         
         <!-- JS Scripts -->
-        <script src="assets/js/hangman.js"></script>
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+        <script src="assets/ng/hangman.js"></script>
         
         <title>Hangman Web Service</title>
   </head>
   
-  <body ng-controller="hangmanController">
+  <body>
     <h1>Hangman!</h1>
     
-    <div class="container-fluid">
+    <!-- Use the hangman controller from hangman app -->
+    <div class="container-fluid" ng-controller="hangmanController">
       <div class="well">
         <div class="secretWord">
           <ul class="list-inline">
-            <li ng-repeat="letter in secretWord">
+            <!-- Print hidden words -->  
+            <li ng-repeat="letter in hiddenWord">
               <span ng-hide="letter.chosen">_</span>
               <span ng-show="letter.chosen">{{ letter.name }}</span>
             </li>
           </ul>
           
+          <!-- Print available letters --> 
           <div class="letters">
             <ul class="list-inline">
               <li ng-repeat="letter in letters">
+                <!-- Use angular to inspect if the letter have been chosen already -->
                 <button class="btn btn-primary letter-button"
                         ng-disabled="letter.chosen"
                         ng-click="try(letter);">{{letter.name}}</button>
@@ -65,8 +71,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
           </p>
         </div>
       </div>
+      
+      <!-- Button to reset the game -->
+      <button ng-click="reset();" class="btn btn-primary btn-large">New Game</button>        
     </div>
       
-    <button ng-click="reset();" class="btn btn-primary btn-large">New Game</button>
+    
   </body>
 </html>
