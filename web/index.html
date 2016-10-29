@@ -19,67 +19,67 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 <!-- Call Angular hangman App -->
 <html ng-app="hangman">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <!-- CSS Styles -->
-        <link rel="stylesheet" href="assets/css/style.css" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        
-        <!-- JS Scripts -->
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
-        <script src="assets/ng/hangman.js"></script>
-        
-        <title>Hangman Web Service</title>
-  </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/bootstrap.css" />
+
+    <!-- JS Scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+    <script src="assets/ng/hangman.js"></script>
+
+    <title>Hangman Web Service</title>
+</head>
   
-  <body>
-    
-    
+<body>
     <!-- Use the hangman controller from hangman app -->
     <div class="container-fluid" ng-controller="hangmanController">
-      <div class="well">
-          <h1>Hangman!</h1>
-          <!-- Canvas for hangman drawing -->
-        <canvas id="hangmanCanvas" width="600" height="300"></canvas>
-        <script src="assets/js/canvas.js"></script>
-        <div class="secretWord">
-          <ul class="list-inline">
-            <!-- Print hidden words -->  
-            <li ng-repeat="letter in hiddenWord">
-              <span ng-hide="letter.chosen">_</span>
-              <span ng-show="letter.chosen">{{ letter.name }}</span>
-            </li>
-          </ul>
-          
-          <!-- Print available letters --> 
-          <div class="letters">
-            <ul class="list-inline">
-              <li ng-repeat="letter in letters">
-                <!-- Use angular to inspect if the letter have been chosen already -->
-                <button class="btn btn-primary letter-button"
-                        ng-disabled="letter.chosen"
-                        ng-click="try(letter);">{{letter.name}}</button>
-              </li>
-            </ul>
-          </div>
-          
-          <p>
-            <span ng-hide="win || lost">You have {{ missesAllowed - numMisses }} guesses remaining.</span>
-            <span ng-show="win">Well done!</span>
-            <span ng-show="lost">Sorry, please try again!</span>
-          </p>
+        <div class="well">
+            <h1>Hangman</h1>
+            <h2>The Web Service Game</h2>
+
+            <!-- Canvas for hangman drawing -->
+            <canvas id="hangmanCanvas" width="600" height="300"></canvas>
+            <script src="assets/js/canvas.js"></script>
+            <div class="secretWord">
+                <ul class="list-inline">
+                    <!-- Print hidden words -->  
+                    <li ng-repeat="letter in hiddenWord">
+                    <span ng-hide="letter.chosen">_</span>
+                    <span ng-show="letter.chosen">{{ letter.name }}</span>
+                    </li>
+                </ul>
+
+                <!-- Print available letters --> 
+                <div class="letters">
+                    <ul class="list-inline">
+                        <li ng-repeat="letter in letters">
+                            <!-- Use angular to inspect if the letter have been chosen already -->
+                            <button class="btn btn-primary letter-button"
+                                ng-disabled="letter.chosen"
+                                ng-click="try(letter);">{{letter.name}}</button>
+                        </li>
+                    </ul>
+                </div>
+
+                <p>
+                    <span ng-hide="win || lost">You have {{ missesAllowed - numMisses }} guesses remaining.</span>
+                    <span ng-show="win">Well done!</span>
+                    <span ng-show="lost">Sorry, please try again!</span>
+                </p>
+            </div>
+
+            <!-- Button to reset the game -->
+            <button ng-click="reset();" class="btn btn-primary btn-large">New Game</button>  
         </div>
-        
-        <!-- Button to reset the game -->
-        <button ng-click="reset();" class="btn btn-primary btn-large">New Game</button>  
-      </div>
     </div>
-      
+
     <!-- Other Scripts -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-  </body>
+</body>
 </html>
