@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2016 Yamil Elías <yamileliassoto@gmail.com>
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+<html ng-app>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- CSS Styles -->
+        <link rel="stylesheet" href="assets/css/style.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        
+        <!-- JS Scripts -->
+        <script src="assets/js/hangman.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+        
+        <title>Hangman Web Service</title>
+  </head>
+  
+  <body ng-controller="hangmanController">
+    <h1>Hangman!</h1>
+    
+    <div class="container-fluid">
+      <div class="well">
+        <div class="secretWord">
+          <ul class="list-inline">
+            <li ng-repeat="letter in secretWord">
+              <span ng-hide="letter.chosen">_</span>
+              <span ng-show="letter.chosen">{{ letter.name }}</span>
+            </li>
+          </ul>
+          
+          <div class="letters">
+            <ul class="list-inline">
+              <li ng-repeat="letter in letters">
+                <button class="btn btn-primary letter-button"
+                        ng-disabled="letter.chosen"
+                        ng-click="try(letter);">{{letter.name}}</button>
+              </li>
+            </ul>
+          </div>
+          
+          <p>
+            <span ng-hide="win || lost">You have {{ missesAllowed - numMisses }} guesses remaining.</span>
+            <span ng-show="win">Well done!</span>
+            <span ng-show="lost">Sorry, please try again!</span>
+          </p>
+        </div>
+      </div>
+    </div>
+      
+    <button ng-click="reset();" class="btn btn-primary btn-large">New Game</button>
+  </body>
+</html>
